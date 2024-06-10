@@ -1,8 +1,21 @@
+from django.test import TestCase
+from .models import Articulo
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 from django.contrib.auth.models import User
-from .models import Articulo
+
+class ArticuloModelTest(TestCase):
+    def setUp(self):
+        self.articulo = Articulo.objects.create(
+            titulo="Test Artículo",
+            descripcion="Test Descripción"
+        )
+
+    def test_articulo_creation(self):
+        self.assertEqual(self.articulo.titulo, "Test Artículo")
+        self.assertEqual(self.articulo.descripcion, "Test Descripción")
+        self.assertIsNotNone(self.articulo.fecha)
 
 class ArticuloAPITest(APITestCase):
     def setUp(self):

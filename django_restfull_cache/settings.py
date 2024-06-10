@@ -9,8 +9,9 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import sys
 from pathlib import Path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -65,6 +66,17 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',  # Añadida esta línea
 ]
 
+if 'test' in sys.argv:
+    DEBUG_TOOLBAR_CONFIG = {
+        'SHOW_TOOLBAR_CALLBACK': lambda request: False,
+    }
+else:
+    DEBUG_TOOLBAR_CONFIG = {
+        # Otras configuraciones
+    }
+
+if not 'test' in sys.argv:
+    INSTALLED_APPS += ['debug_toolbar']
 
 INTERNAL_IPS = [
     '127.0.0.1',
